@@ -128,10 +128,7 @@ const Signin = (props) => {
               </p>
               <div className="clearfix"></div>
               <br />
-              <div className="text-center">
-                <h1><i className="fa fa-paw"></i> EMENU!</h1>
-                <p>©2024 All Rights Reserved. EMENU!</p>
-              </div>
+              
             </div>
           </section>
         </div>
