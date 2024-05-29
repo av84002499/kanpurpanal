@@ -20,7 +20,7 @@ const Userprofile = (props) => {
 
     try {
       const formData = { 'userId': userId };
-      const response = await fetch('https://qmunuback.onrender.com/api/userdata/getuserdata', {
+      const response = await fetch('https://kanpurback.onrender.com/api/userdata/getuserdata', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -73,7 +73,7 @@ const Userprofile = (props) => {
 
     console.log(formData);
     try {
-      const response = await fetch('https://qmunuback.onrender.com/api/userdata/', {
+      const response = await fetch('https://kanpurback.onrender.com/api/userdata/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

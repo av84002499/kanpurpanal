@@ -40,7 +40,7 @@ const Signin = (props) => {
     const formData = { email, password };
 
     try {
-      const response = await fetch('https://qmunuback.onrender.com/api/users/signin', {
+      const response = await fetch('https://kanpurback.onrender.com/api/users/signin', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
