@@ -1,31 +1,27 @@
-import React, { useState ,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
-
-
 
 const Signin = (props) => {
   const navigate = useNavigate();
   
-  const [loading, setLoading] = useState(true); 
+  const [loading, setLoading] = useState(false); 
   const [count, setCount] = useState(2); 
   const [showPassword, setShowPassword] = useState(false);
+
+  useEffect(() => {
+    if (count > 0 && loading) {
+      const timer = setTimeout(() => {
+        setCount(prevCount => prevCount - 1);
+      }, 1000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [count, loading]);
+
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setCount(prevCount => prevCount - 1);
-    }, 2000);
-
-    // Stop the loading and countdown when count reaches 1
-    if (count === 2) {
-      setLoading(false);
-      clearTimeout(timer);
-    }
-
-    return () => clearTimeout(timer);
-  }, [count]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -38,68 +34,56 @@ const Signin = (props) => {
       return;
     }
 
-    const formData = { 'email': email, 'password': password };
-    // console.log('formdata:', formData)
+    setLoading(true);
+    setCount(2);
+
+    const formData = { email, password };
 
     try {
-      const myHeaders = new Headers();
-      myHeaders.append("Content-Type", "application/json");
       const response = await fetch('https://kanpurback.onrender.com/api/users/signin', {
         method: 'POST',
-        headers: myHeaders,
+        headers: {
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify(formData)
       });
 
       if (!response.ok) {
+        const responseData = await response.json();
         setLoading(false);
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
-          text: 'Invalid credentials!',
-          timer: 3000, // 1 second
-
+          text: responseData.message || 'Invalid credentials!',
+          timer: 3000,
         });
-      } else if (response.status === 409) { // Assuming 409 represents a conflict (email already exists)
-        setLoading(false);
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: 'The email already exists!',
-          timer: 3000, // 1 second
-
-        });
-    }
-      
+        return;
+      }
 
       const responseData = await response.json();
-      if (responseData) {
-        // console.log(responseData);
-        props.setUserLogged(responseData);
-        Swal.fire({
-          icon: 'success',
-          title: 'Logged in successfully!',
-          showConfirmButton: false,
-          timer: 1000, //  seconds
-        });
-        navigate('/Userprofile');
-      }
-      else {
-        console.log('Something went wrong:', responseData);
-        navigate('/Signin');
-      }
+      props.setUserLogged(responseData);
 
-
+      Swal.fire({
+        icon: 'success',
+        title: 'Logged in successfully!',
+        showConfirmButton: false,
+        timer: 1000,
+      });
+      navigate('/Userprofile');
+      
     } catch (error) {
       console.error('Error submitting form:', error.message);
+      setLoading(false);
       alert(error.message);
     }
   };
+
   return (
-    <div className="card" style={{ maxWidth: '400px', margin: 'auto', marginTop: 7 + 'rem', marginBottom: 3 + 'rem' }}>
+    <div className="card" style={{ maxWidth: '400px', margin: 'auto', marginTop: '7rem', marginBottom: '3rem' }}>
       <div className="card-body">
         <div className="animate form login_form" style={{ background: 'azure', padding: '10px' }}>
           <section className="login_content">
-            <form id="login">
+            <form id="login" onSubmit={handleSubmit}>
               <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
                 <img style={{ height: '200px' }} src="./download.png" alt="Description" />
               </div>
@@ -129,50 +113,24 @@ const Signin = (props) => {
                   ></i>
                 </div>
               </div>
-
-
-                <div>
-                  <div className="row mt-2">
-                    
-                    <div className="col-md-4 mt-2">
-                      <button type="submit" className="width-35 btn btn-success" onClick={handleSubmit}>
-                      {loading ? (
-                        <p>Please wait {count} sec...</p>
-                      ) : (
-                        <p>Continue</p>
-                      )} 
-                      </button>
-                    </div>
-
-                  </div>
+              <div className="row mt-2">
+                <div className="col-md-12 text-center">
+                  <button type="submit" className="btn btn-success" disabled={loading}>
+                    {loading ? `Please wait ${count} sec...` : 'Continue'}
+                  </button>
                 </div>
-
+              </div>
             </form>
 
-            <div className="clearfix">
-            </div>
-
             <div className="separator">
-             
               <p className="change_link">New to site?
                 <a href="https://kanpurpanal.vercel.app/signup"> <u>Sign Up</u> </a>
               </p>
-
               <div className="clearfix"></div>
               <br />
-
-              <div>
-                <div className="row">
-                  <div className="col-md-12 text-center">
-                    <h1><i className="fa fa-paw"></i> EMENU!</h1>
-                  </div>
-                  <div className="row">
-                    <div className="col-md-12 text-center">
-                      <p>©2024 All Rights Reserved. EMENU!</p>
-                    </div>
-                  </div>
-
-                </div>
+              <div className="text-center">
+                <h1><i className="fa fa-paw"></i> EMENU!</h1>
+                <p>©2024 All Rights Reserved. EMENU!</p>
               </div>
             </div>
           </section>
@@ -182,4 +140,4 @@ const Signin = (props) => {
   );
 }
 
-export default Signin
+export default Signin;
