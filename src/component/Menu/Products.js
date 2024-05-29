@@ -91,7 +91,7 @@ const Products = (props) => {
         formData.append('imageUrl', imageUrl);
 
         try {
-            const response = await fetch('https://kanpurback.onrender.com/api/products/', {
+            const response = await fetch('https://qmunuback.onrender.com/api/products/', {
                 method: 'POST',
                 headers: {
                     Authorization: props.userLogged.token,
@@ -128,7 +128,7 @@ const Products = (props) => {
 
         try {
             const formData = { ownerId: ownerId };
-            const response = await fetch('https://kanpurback.onrender.com/api/products/myProducts', {
+            const response = await fetch('https://qmunuback.onrender.com/api/products/myProducts', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -177,7 +177,7 @@ const Products = (props) => {
         }
 
         try {
-            const url = 'https://kanpurback.onrender.com/api/products/' + prodId;
+            const url = 'https://qmunuback.onrender.com/api/products/' + prodId;
             const response = await fetch(url, {
                 method: 'DELETE',
                 headers: {
@@ -222,7 +222,7 @@ const Products = (props) => {
         }
 
         try {
-            const url = 'https://kanpurback.onrender.com/api/products/' + prodId;
+            const url = 'https://qmunuback.onrender.com/api/products/' + prodId;
             const response = await fetch(url, {
                 method: 'PUT',
                 headers: {
