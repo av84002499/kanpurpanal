@@ -171,7 +171,7 @@ const Signup = () => {
 
                     <div className="row">
                       <div className="col-md-6">
-                        <a href="https://quickcatalog.in/Signin"> <u>Signin</u> </a>
+                      <a href="https://kanpurpanal.vercel.app/Signin"> <u>Sign in</u> </a>
                       </div>
                     </div>
                   </div>

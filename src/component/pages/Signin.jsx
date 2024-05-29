@@ -101,7 +101,7 @@ const Signin = (props) => {
           <section className="login_content">
             <form id="login">
               <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
-                <img style={{ height: '200px' }} src="./images/hiring-tag.png" alt="Description" />
+                <img style={{ height: '200px' }} src="./download.png" alt="Description" />
               </div>
               <h1 style={{ textAlign: 'center' }}>Login Form</h1>
               <div>
@@ -155,7 +155,7 @@ const Signin = (props) => {
             <div className="separator">
              
               <p className="change_link">New to site?
-                <a href="https:/signup"> <u>Sign Up</u> </a>
+                <a href="https://kanpurpanal.vercel.app/signup"> <u>Sign Up</u> </a>
               </p>
 
               <div className="clearfix"></div>
